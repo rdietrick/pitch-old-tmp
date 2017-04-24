@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 14, 2007 2:54:10 PM by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.userprofiling.om.UserInvitation" table="user_invitation" catalog="pitch_db2">
+        <comment></comment>
+        <id name="invitationId" type="int">
+            <column name="invitation_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="user" class="com.pitchplayer.userprofiling.om.User" fetch="select">
+            <column name="inviter_id" not-null="true">
+                <comment></comment>
+            </column>
+        </many-to-one>
+        <property name="invitationCode" type="string">
+            <column name="invitation_code" length="64" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="inviteeEmail" type="string">
+            <column name="invitee_email" length="128" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="status" type="byte">
+            <column name="status" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="sentDate" type="timestamp">
+            <column name="sent_date" length="19" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

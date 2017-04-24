@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 21, 2007 12:24:53 PM by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.stats.om.GamePlayerRecord" table="game_player" catalog="pitch_db2">
+        <comment></comment>
+        <composite-id name="id" class="com.pitchplayer.stats.om.GamePlayerId">
+            <key-property name="gameId" type="int">
+                <column name="game_id" />
+            </key-property>
+            <key-property name="userId" type="int">
+                <column name="user_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="user" class="com.pitchplayer.userprofiling.om.User" update="false" insert="false" fetch="select">
+            <column name="user_id" not-null="true">
+                <comment></comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="gameRecord" class="com.pitchplayer.stats.om.GameRecord" update="false" insert="false" fetch="select">
+            <column name="game_id" not-null="true">
+                <comment></comment>
+            </column>
+        </many-to-one>
+        <property name="seat" type="byte">
+            <column name="seat" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="score" type="java.lang.Short">
+            <column name="score">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="winner" type="java.lang.Byte">
+            <column name="winner">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="jackPoints" type="java.lang.Short">
+            <column name="jack_points">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="gamePoints" type="java.lang.Short">
+            <column name="game_points">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="ups" type="java.lang.Short">
+            <column name="ups">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="jackSteal" type="java.lang.Short">
+            <column name="jack_steal">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="jackLoss" type="java.lang.Short">
+            <column name="jack_loss">
+                <comment></comment>
+            </column>
+        </property>    </class>
+</hibernate-mapping>

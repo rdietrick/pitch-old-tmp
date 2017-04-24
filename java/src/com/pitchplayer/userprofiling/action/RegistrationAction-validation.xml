@@ -1,0 +1,64 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+       "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+  <field name="user.username">
+      <field-validator type="requiredstring">
+          <param name="trim">true</param>
+          <message>Please enter a username.</message>
+      </field-validator>
+      <field-validator type="regex">
+          <param name="expression">[a-zA-Z0-9]{4,16}</param>
+          <message>Username may only contain letters and numbers and must be 4 - 16 characters long.</message>
+     </field-validator>
+  </field>
+  <field name="user.passwd">
+      <field-validator type="requiredstring">
+          <param name="trim">true</param>
+          <message>Please enter a password.</message>
+      </field-validator>
+       <field-validator type="stringlength">
+      	<param name="minLength">4</param>
+      	<param name="maxLength">16</param>
+        <message>Password must be between 4 and 16 characters in length.</message>
+      </field-validator>
+  </field>
+  <field name="passwdConfirmation">
+      <field-validator type="requiredstring">
+          <param name="trim">true</param>
+          <message>Please confirm your password.</message>
+      </field-validator>
+  </field>
+  <field name="user.emailAddress">
+      <field-validator type="email">
+          <message>Please enter a valid email address.</message>
+      </field-validator>
+  </field>
+  <field name="user.firstName">
+       <field-validator type="requiredstring">
+          <param name="trim">true</param>
+          <message>Please enter a first name.</message>
+      </field-validator>
+  </field>
+  <field name="user.lastName">
+       <field-validator type="requiredstring">
+          <param name="trim">true</param>
+          <message>Please enter a last name.</message>
+      </field-validator>
+  </field>  
+  <field name="user.userHomeAddress.city">
+       <field-validator type="requiredstring">
+          <param name="trim">true</param>
+          <message>Please enter a city.</message>
+      </field-validator>
+  </field>  
+   <field name="user.userHomeAddress.state">
+       <field-validator type="requiredstring">
+          <param name="trim">true</param>
+          <message>Please choose a state.</message>
+      </field-validator>
+  </field>  
+   <validator type="expression">
+       <param name="expression">user.passwd.equals(passwdConfirmation)</param>
+   		<message>Passwords do not match.</message>
+   </validator>
+  </validators>

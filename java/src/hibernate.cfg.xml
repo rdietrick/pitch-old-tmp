@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory name="pitch_session">
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
+        <property name="hibernate.connection.password">pittston!</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/pitch_db2</property>
+        <property name="hibernate.connection.username">pitch</property>
+        <property name="hibernate.default_schema">pitch_db2</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+        <mapping resource="com/pitchplayer/userprofiling/om/UserPref.hbm.xml" />
+        <mapping resource="com/pitchplayer/userprofiling/om/UserGamePref.hbm.xml" />
+        <mapping resource="com/pitchplayer/userprofiling/om/UserHomeAddress.hbm.xml" />
+        <mapping resource="com/pitchplayer/userprofiling/om/BaseUser.hbm.xml" />
+        <mapping resource="com/pitchplayer/userprofiling/om/EmailValidation.hbm.xml" />
+        <mapping resource="com/pitchplayer/userprofiling/om/UserInvitation.hbm.xml" />
+        <mapping resource="com/pitchplayer/userprofiling/om/UserAssociation.hbm.xml" />
+        <mapping resource="com/pitchplayer/userprofiling/om/CpuPlayer.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 13, 2007 7:54:02 PM by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.stats.om.PlayerStat" table="player_stat" catalog="pitch_db2">
+        <comment></comment>
+        <id name="playerStatId" type="int">
+            <column name="player_stat_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="user" class="com.pitchplayer.userprofiling.om.User" fetch="select">
+            <column name="user_id" not-null="true">
+                <comment></comment>
+            </column>
+        </many-to-one>
+        <property name="username" type="string">
+            <column name="username" length="16" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="gameType" type="byte">
+            <column name="game_type" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="games" type="java.lang.Integer">
+            <column name="games">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="wins" type="java.lang.Integer">
+            <column name="wins">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="losses" type="java.lang.Integer">
+            <column name="losses">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="winPct" type="big_decimal">
+            <column name="win_pct" precision="4" scale="3">
+                <comment></comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

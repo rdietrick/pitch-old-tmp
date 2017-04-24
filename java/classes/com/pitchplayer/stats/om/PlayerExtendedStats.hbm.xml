@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 21, 2007 12:24:53 PM by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.stats.om.PlayerExtendedStats" table="player_extended_stats" catalog="pitch_db2">
+        <comment></comment>
+        <id name="userId" type="int">
+            <column name="user_id" />
+            <generator class="foreign">
+            	<param name="property">user</param>
+            </generator>
+        </id>
+        <one-to-one name="user" class="com.pitchplayer.userprofiling.om.User" constrained="true">
+        </one-to-one>
+        <property name="username" type="string">
+            <column name="username" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="gameAvg" type="float">
+            <column name="game_avg">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="jackAvg" type="float">
+            <column name="jack_avg">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="jackStealAvg" type="float">
+            <column name="jack_steal_avg">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="jackLossAvg" type="float">
+            <column name="jack_loss_avg">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="upAvg" type="float">
+            <column name="ups_avg">
+                <comment></comment>
+            </column>
+        </property>
+	</class>
+</hibernate-mapping>

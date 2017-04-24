@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 21, 2007 12:24:53 PM by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.userprofiling.om.User" table="user" catalog="pitch_db2">
+        <comment></comment>
+        <id name="userId" type="java.lang.Integer">
+            <column name="user_id" />
+            <generator class="identity" />
+        </id>
+        <property name="username" type="string">
+            <column name="username" length="16" not-null="true" unique="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="passwdHash" type="string">
+            <column name="passwd_hash" length="41" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="status" type="java.lang.Byte">
+            <column name="status">
+                <comment>Used to denote deleted or banned users.</comment>
+            </column>
+        </property>
+        <property name="registrationDate" type="timestamp">
+            <column name="registration_date" length="19" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="birthDate" type="timestamp">
+            <column name="birth_date" length="19" not-null="false">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="userType" type="java.lang.Byte">
+            <column name="user_type">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="loggedIn" type="java.lang.Boolean">
+            <column name="logged_in">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="sessionId" type="string">
+            <column name="session_id" length="64">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="firstName" type="string">
+            <column name="first_name" length="32">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="32">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="emailAddress" type="string">
+            <column name="email_address" length="128">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="lastLogin" type="timestamp">
+            <column name="last_login" length="19">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="loginCount" type="java.lang.Integer">
+            <column name="login_count">
+                <comment></comment>
+            </column>
+        </property>
+        <set name="gameRecordsForQuitterId" inverse="true" lazy="true">
+            <key>
+                <column name="quitter_id">
+                    <comment></comment>
+                </column>
+            </key>
+            <one-to-many class="com.pitchplayer.stats.om.GameRecord" />
+        </set>
+        <set name="gamePlayerRecords" inverse="true" lazy="true">
+            <key>
+                <column name="user_id" not-null="true">
+                    <comment></comment>
+                </column>
+            </key>
+            <one-to-many class="com.pitchplayer.stats.om.GamePlayerRecord" />
+        </set>
+        <set name="gameRecordsForWinnerId" inverse="true" lazy="true">
+            <key>
+                <column name="winner_id">
+                    <comment></comment>
+                </column>
+            </key>
+            <one-to-many class="com.pitchplayer.stats.om.GameRecord" />
+        </set>
+        <one-to-one name="userHomeAddress"
+        	class="com.pitchplayer.userprofiling.om.UserHomeAddress"
+        	cascade="all">
+        </one-to-one>
+         <one-to-one name="emailValidation"
+        	class="com.pitchplayer.userprofiling.om.EmailValidation"
+        	cascade="all">
+        </one-to-one>
+        <one-to-one name="cpuPlayer"
+        	class="com.pitchplayer.userprofiling.om.CPUPlayerRecord"
+        	cascade="none">
+        </one-to-one>
+         <set name="userInvitations" inverse="true">
+            <key>
+                <column name="inviter_id" not-null="true">
+                    <comment></comment>
+                </column>
+            </key>
+            <one-to-many class="com.pitchplayer.userprofiling.om.UserInvitation" />
+        </set>
+         <set name="userAssociations" inverse="true" lazy="true">
+         	<key>
+         		<column name="user_id" not-null="true">
+         			<comment></comment>
+         		</column>
+         	</key>
+         	<one-to-many
+         		class="com.pitchplayer.userprofiling.om.UserAssociation" />
+         </set>
+         <one-to-one name="userPref"
+        	class="com.pitchplayer.userprofiling.om.UserPref"
+        	cascade="all">
+        </one-to-one>
+        <one-to-one name="userGamePref"
+        	class="com.pitchplayer.userprofiling.om.UserGamePref"
+        	cascade="all">
+        </one-to-one>
+    </class>
+</hibernate-mapping>

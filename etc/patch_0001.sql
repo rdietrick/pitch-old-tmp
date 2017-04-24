@@ -1,0 +1,1 @@
+update user set isCPU = 0 were isCPU is null;

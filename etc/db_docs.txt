@@ -1,0 +1,7 @@
+TRIGGERS
+======================
+1. Must be created by root (or someone with a permission which pitch doesn't have, apparently).
+2. Can be viewes with this query:
+SELECT TRIGGER_NAME, EVENT_MANIPULATION, EVENT_OBJECT_TABLE, ACTION_STATEMENT 
+    FROM INFORMATION_SCHEMA.TRIGGERS 
+    WHERE TRIGGER_SCHEMA='pitch_db2';

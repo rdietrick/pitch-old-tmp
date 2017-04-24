@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 21, 2007 12:24:53 PM by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.userprofiling.om.UserHomeAddress" table="user_home_address" catalog="pitch_db2">
+        <comment></comment>
+        <id name="userId" type="int">
+            <column name="user_id" />
+            <generator class="foreign">
+            	<param name="property">user</param>
+            </generator>
+        </id>
+        <one-to-one name="user" class="com.pitchplayer.userprofiling.om.User" constrained="true">
+        </one-to-one>
+        <property name="city" type="string">
+            <column name="city" length="64">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="state" type="string">
+            <column name="state" length="2">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="64">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="homePhone" type="string">
+            <column name="home_phone" length="32">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="mobilePhone" type="string">
+            <column name="mobile_phone" length="32">
+                <comment></comment>
+            </column>
+        </property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 14, 2007 2:54:10 PM by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.userprofiling.om.UserAssociation" table="user_association" catalog="pitch_db2">
+        <comment></comment>
+        <id name="userAssociationId" type="java.lang.Integer">
+            <column name="user_association_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="userByUserId" class="com.pitchplayer.userprofiling.om.User" fetch="select">
+            <column name="user_id" not-null="true">
+                <comment></comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="userByAssociateId" class="com.pitchplayer.userprofiling.om.User" fetch="join">
+            <column name="associate_id" not-null="true">
+                <comment></comment>
+            </column>
+        </many-to-one>
+        <property name="associationType" type="byte">
+            <column name="association_type" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="dateCreated" type="timestamp">
+            <column name="date_created" length="19" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="dateAccepted" type="timestamp">
+            <column name="date_accepted" length="19">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="status" type="int">
+            <column name="status">
+                <comment></comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

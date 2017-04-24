@@ -1,0 +1,1 @@
+select * from user a, user_home_address b where a.user_id = b.user_id order by a.user_id desc;

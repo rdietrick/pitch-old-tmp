@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" singleton="true" destroy-method="close">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      <property name="url" value="jdbc:mysql://localhost:3306/pitch_db2"/>
+      <property name="username" value="pitch"/>
+      <property name="password" value="pittston!"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+      <property name="dataSource">
+          <ref bean="dataSource"/>
+      </property>
+      <property name="hibernateProperties">
+          <ref bean="hibernateProperties" />
+      </property>
+      <!--  OR mapping files. -->
+      <property name="mappingResources">
+          <list>
+	    <value>com/pitchplayer/userprofiling/om/EmailValidation.hbm.xml</value>
+	    <value>com/pitchplayer/userprofiling/om/User.hbm.xml</value>
+	    <value>com/pitchplayer/userprofiling/om/UserHomeAddress.hbm.xml</value>
+	    <value>com/pitchplayer/userprofiling/om/CPUPlayer.hbm.xml</value>
+	    <value>com/pitchplayer/userprofiling/om/UserInvitation.hbm.xml</value>
+	    <value>com/pitchplayer/userprofiling/om/UserAssociation.hbm.xml</value>
+	    <value>com/pitchplayer/userprofiling/om/UserPref.hbm.xml</value>
+	    <value>com/pitchplayer/userprofiling/om/UserGamePref.hbm.xml</value>
+	    <value>com/pitchplayer/stats/om/GameRecord.hbm.xml</value>
+	    <value>com/pitchplayer/stats/om/GamePlayerRecord.hbm.xml</value>
+	  </list>
+      </property>
+    </bean>
+
+    <!-- Database Properties -->
+    <bean id="hibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+      <property name="properties">
+        <props>
+	  <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+	  <prop key="hibernate.show_sql">true</prop>
+	</props>
+      </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+      <property name="sessionFactory">
+          <ref bean="sessionFactory"/>
+      </property>
+    </bean>
+
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+      <property name="transactionManager">
+          <ref bean="transactionManager"/>
+      </property>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host">
+          <value>localhost</value>
+      </property>
+    </bean>
+
+ 	<bean id="emailTemplateDao" class="com.pitchplayer.mail.EmailTemplateDao">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	
+	<bean id="emailTemplateService" class="com.pitchplayer.mail.EmailTemplateServiceImpl">
+		<property name="emailTemplateDao">
+			<ref bean="emailTemplateDao"/>
+		</property>
+	</bean>
+	
+	 <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactory">
+	 	<property name="freemarkerVariables">
+	 		<map>
+	 			<entry key="baseUrl">
+	 				<value>@serverUrl@</value>
+	 			</entry>
+	 		</map>
+	 	</property>
+	 </bean>
+
+	<bean id="emailTemplateManager" class="com.pitchplayer.mail.EmailTemplateManager">
+		<property name="cfgFactory">
+			<ref bean="freemarkerConfiguration"/>
+		</property>
+		<property name="emailTemplateService">
+			<ref bean="emailTemplateService"/>
+		</property>
+	</bean>
+
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+      <property name="sessionFactory">
+          <ref bean="sessionFactory"/>
+      </property>
+    </bean>
+
+    <bean id="attributeSource" class="org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource">
+    </bean>
+
+<!--
+    <bean id="userDao" class="com.pitchplayer.userprofiling.dao.UserDaoHibernate">
+      <property name="hibernateTemplate">
+          <ref bean="hibernateTemplate"/>
+      </property>
+    </bean>
+-->
+    <bean id="userDao" class="com.pitchplayer.userprofiling.dao.Mysql5UserDaoHibernate">
+      <property name="hibernateTemplate">
+          <ref bean="hibernateTemplate"/>
+      </property>
+    </bean>
+	<bean id="cpuPlayerDao" class="com.pitchplayer.userprofiling.dao.CPUPlayerDao">
+      <property name="hibernateTemplate">
+          <ref bean="hibernateTemplate"/>
+      </property>
+	</bean>
+    <bean id="userService" class="com.pitchplayer.userprofiling.UserServiceImpl">
+      <property name="userDao">
+          <ref bean="userDao"/>
+      </property>
+      <property name="mailSender">
+          <ref bean="mailSender"/>
+      </property>
+    </bean>
+
+
+    <bean id="userAssociationDao" class="com.pitchplayer.userprofiling.dao.UserAssociationDaoHibernate">
+      <property name="hibernateTemplate">
+          <ref bean="hibernateTemplate"/>
+      </property>
+    </bean>
+
+    <bean id="userAssociationService" class="com.pitchplayer.userprofiling.UserAssociationServiceImpl">
+      <property name="userAssociationDao">
+          <ref bean="userAssociationDao"/>
+      </property>
+    </bean>
+
+
+    <bean id="gameRecordDao" class="com.pitchplayer.stats.dao.GameRecordDaoHibernate">
+      <property name="hibernateTemplate">
+          <ref bean="hibernateTemplate"/>
+      </property>
+    </bean>
+
+    <bean id="gameRecordService" class="com.pitchplayer.stats.GameRecordServiceImpl">
+      <property name="gameRecordDao">
+          <ref bean="gameRecordDao"/>
+      </property>
+    </bean>
+
+
+    <bean id="playerStatsDao" class="com.pitchplayer.stats.dao.PlayerStatDaoJdbc">
+      <property name="dataSource">
+          <ref bean="dataSource"/>
+      </property>
+    </bean>
+
+    <bean id="playerStatsService" class="com.pitchplayer.stats.PlayerStatServiceImpl">
+      <property name="playerStatsDao">
+          <ref bean="playerStatsDao"/>
+      </property>
+    </bean>
+
+    <!-- This should be replaced with some persistent user store when time permits. -->
+    <bean id="gameFactory" class="com.pitchplayer.server.game.GameFactory" singleton="true">
+      <property name="gameRecordService">
+          <ref local="gameRecordService"/>
+      </property>
+      <property name="userService">
+          <ref local="userService"/>
+      </property>
+    </bean>
+
+    <!-- This should be replaced with some persistent user store when time permits. -->
+    <bean id="userStore" class="com.pitchplayer.userprofiling.MemoryBasedUserStore" singleton="true">
+    </bean>
+
+    <bean id="cpuPlayerFactory" class="com.pitchplayer.server.game.player.CPUPlayerFactory" singleton="true">
+      <property name="userService">
+          <ref local="userService"/>
+      </property>
+    </bean>
+    
+    <bean id="gameSimulatorService" class="com.pitchplayer.stats.GameSimulatorServiceImpl">
+      <property name="gameFactory">
+          <ref local="gameFactory"/>
+      </property>
+      <property name="playerFactory">
+          <ref local="cpuPlayerFactory"/>
+      </property>
+    </bean>
+
+<!--
+    <bean id="pitchServer" class="com.pitchplayer.server.PitchServer" singleton="false" init-method="init">
+      <property name="dbManager">
+          <ref local="dbManager"/>
+      </property>
+      <property name="gameFactory">
+          <ref local="gameFactory"/>
+      </property>
+      <property name="userStore">
+          <ref local="userStore"/>
+      </property>
+      <property name="objPort">
+          <value>7010</value>
+      </property>
+      <property name="rawPort">
+          <value>7011</value>
+      </property>
+    </bean>
+
+    <bean id="resourceManager" class="com.pitchplayer.util.ResourceManager" singleton="true">
+      <property name="pitchServer">
+          <ref local="pitchServer"/>
+      </property>
+    </bean>
+-->
+        
+</beans>
+

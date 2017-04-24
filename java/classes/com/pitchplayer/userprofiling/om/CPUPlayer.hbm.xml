@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 21, 2007 12:24:53 PM by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.userprofiling.om.CPUPlayerRecord" table="cpu_player" catalog="pitch_db2">
+        <comment></comment>
+        <id name="userId" type="int">
+            <column name="user_id" />
+            <generator class="foreign">
+            	<param name="property">user</param>
+            </generator>
+        </id>
+        <one-to-one name="user"
+        	class="com.pitchplayer.userprofiling.om.User"
+        	constrained="true" lazy="false">
+        </one-to-one>
+        <property name="className" type="string">
+            <column name="class_name" length="64">
+                <comment></comment>
+            </column>
+        </property>
+         <property name="playerType" type="java.lang.Byte">
+            <column name="player_type">
+                <comment></comment>
+            </column>
+        </property>
+         <property name="skillLevel" type="java.lang.Integer">
+            <column name="skill_level">
+                <comment>Estimated skill level</comment>
+            </column>
+        </property>
+         <property name="status" type="java.lang.String">
+            <column name="status">
+                <comment>Enabled/Disabled/Sim-only/etc</comment>
+            </column>
+        </property>
+ 	</class>
+</hibernate-mapping>

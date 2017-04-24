@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<type-mapping>
+		<sql-type jdbc-type="TINYINT"
+			hibernate-type="java.lang.Integer">
+		</sql-type>
+		<sql-type jdbc-type="TINYINT" hibernate-type="java.lang.Integer"
+			not-null="true">
+		</sql-type>
+		<sql-type jdbc-type="TINYINT" hibernate-type="java.lang.Integer"
+			not-null="false">
+		</sql-type>
+	</type-mapping>
+
+
+	<table-filter match-catalog="pitch_db2" match-name="user" />
+	<table-filter match-catalog="pitch_db2"
+		match-name="email_validation" />
+
+	<table-filter match-catalog="pitch_db2"
+		match-name="user_association" />
+	<table-filter match-catalog="pitch_db2"
+		match-name="user_home_address" />
+	<table-filter match-catalog="pitch_db2"
+		match-name="user_invitation" />
+	<table-filter match-name="user_game_pref"
+		match-catalog="pitch_db2">
+	</table-filter>
+	<table-filter match-name="user_pref" match-catalog="pitch_db2"></table-filter>
+	<table-filter match-name="cpu_player" match-catalog="pitch_db2"></table-filter>
+	<table catalog="pitch_db2" name="user">
+		<column name="logged_in" jdbc-type='TINYINT'
+			type="java.lang.Boolean">
+		</column>
+	</table>
+	<table catalog="pitch_db2" name="user" class="com.pitchplayer.userprofiling.om.BaseUser">
+		<column name="username" jdbc-type=''></column>
+		<column name="passwd_hash" jdbc-type=''></column>
+		<column name="registration_date" jdbc-type=''></column>
+		<column name="user_type" jdbc-type=''></column>
+		<column name="logged_in" jdbc-type=''></column>
+		<column name="first_name" jdbc-type=''></column>
+		<column name="last_name" jdbc-type=''></column>
+		<column name="email_address" jdbc-type=''></column>
+		<column name="last_login" jdbc-type=''></column>
+		<column name="login_count" jdbc-type=''></column>
+		<column name="birth_date" jdbc-type=''></column>
+		<column name="session_id" jdbc-type=''></column>
+	</table>
+</hibernate-reverse-engineering>

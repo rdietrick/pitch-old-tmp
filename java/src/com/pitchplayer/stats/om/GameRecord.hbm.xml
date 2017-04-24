@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 21, 2007 12:24:53 PM by Hibernate Tools 3.2.0.b11 -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.stats.om.GameRecord" table="game" catalog="pitch_db2">
+        <comment></comment>
+        <id name="gameId" type="java.lang.Integer">
+            <column name="game_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="userByWinnerId" class="com.pitchplayer.userprofiling.om.User" fetch="select">
+            <column name="winner_id">
+                <comment></comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="userByQuitterId" class="com.pitchplayer.userprofiling.om.User" fetch="select">
+            <column name="quitter_id">
+                <comment></comment>
+            </column>
+        </many-to-one>
+        <property name="gameType" type="byte">
+            <column name="game_type" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="startDate" type="timestamp">
+            <column name="start_date" length="19">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="endDate" type="timestamp">
+            <column name="end_date" length="19">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="sim" type="java.lang.Byte">
+            <column name="sim">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="crntHand" type="java.lang.Short">
+            <column name="crnt_hand">
+                <comment></comment>
+            </column>
+        </property>
+        <set name="gamePlayers" inverse="true" cascade="all">
+            <key>
+                <column name="game_id" not-null="true">
+                    <comment></comment>
+                </column>
+            </key>
+            <one-to-many class="com.pitchplayer.stats.om.GamePlayerRecord" />
+        </set>
+    </class>
+</hibernate-mapping>

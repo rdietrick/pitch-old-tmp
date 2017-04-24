@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 10, 2008 4:02:44 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.userprofiling.om.UserPref" table="user_pref" catalog="pitch_db2">
+        <id name="userId" type="int">
+            <column name="user_id" />
+            <generator class="foreign">
+            	<param name="property">user</param>
+            </generator>
+        </id>
+        <one-to-one name="user" class="com.pitchplayer.userprofiling.om.User" constrained="true">
+        </one-to-one>
+        <property name="showName" type="java.lang.Integer">
+            <column name="show_name" not-null="true" />
+        </property>
+        <property name="showCity" type="java.lang.Integer">
+            <column name="show_city" not-null="true" />
+        </property>
+        <property name="showState" type="java.lang.Integer">
+            <column name="show_state" not-null="true" />
+        </property>
+        <property name="newsletterSubscriptionStatus" type="java.lang.Boolean">
+            <column name="subscribe_newsletter" not-null="true" />
+        </property>
+        <property name="dateUpdated" type="timestamp">
+            <column name="date_updated" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

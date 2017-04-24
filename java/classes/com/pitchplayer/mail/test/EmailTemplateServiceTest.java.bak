@@ -1,0 +1,90 @@
+package com.pitchplayer.mail.test;
+
+import java.util.List;
+
+import com.admob.db.DbException;
+import com.admob.leadgen.test.AbstractLeadgenTest;
+import com.admob.mail.EmailTemplate;
+import com.admob.mail.EmailTemplateListOrder;
+import com.admob.mail.EmailTemplateService;
+
+import junit.framework.TestCase;
+
+public class EmailTemplateServiceTest extends AbstractLeadgenTest  {
+
+	private EmailTemplateService emailTemplateService;
+	
+	private EmailTemplate testTemplate;
+	
+	private EmailTemplate createTestTemplate() throws DbException {
+		EmailTemplate template = new EmailTemplate();
+		template.setTemplateName("test template");
+		template.setFromAddress("robert@admob.com");
+		template.setSubject("testing");
+		template.setMessageBody("Hello.  This is just a test message");
+		emailTemplateService.createNewEmailTemplate(template);
+		return template;
+	}
+	
+	public void onTearDown() throws Exception {
+		if (testTemplate != null) {
+			emailTemplateService.deleteEmailTemplate(testTemplate.getEmailTemplateKey());
+			testTemplate = null;
+		}
+	}
+	
+	public void testCreateNewEmailTemplate() throws DbException {
+		testTemplate = createTestTemplate();
+		assertTrue(testTemplate.getEmailTemplateKey() != null);
+	}
+
+	public void testDeleteEmailTemplate() throws DbException {
+		testTemplate = createTestTemplate();
+		emailTemplateService.deleteEmailTemplate(testTemplate.getEmailTemplateKey());
+		testTemplate = emailTemplateService.getEmailTemplate(testTemplate.getEmailTemplateKey());
+		assertTrue(testTemplate == null);
+	}
+
+	public void testGetEmailTemplate() throws DbException {
+		testTemplate = createTestTemplate();
+		EmailTemplate copy = emailTemplateService.getEmailTemplate(testTemplate.getEmailTemplateKey());
+		assertTrue(testTemplate.getEmailTemplateKey() == copy.getEmailTemplateKey() && 
+				testTemplate.getSubject().equals(copy.getSubject()));
+	}
+
+	public void testSearchTemplatesByName() throws DbException {
+		testTemplate = createTestTemplate();
+		List<EmailTemplate> results = emailTemplateService.searchTemplatesByName("test");
+		for (EmailTemplate tmpl : results) {
+			if (tmpl.getEmailTemplateKey() == testTemplate.getEmailTemplateKey()) {
+				assertTrue(true);
+				return;
+			}
+		}
+		assertTrue(false);
+	}
+
+	public void testUpdateEmailTemplate() throws DbException {
+		testTemplate = createTestTemplate();
+		testTemplate.setSubject("new subject");
+		emailTemplateService.updateEmailTemplate(testTemplate);
+		EmailTemplate copy = emailTemplateService.getEmailTemplate(testTemplate.getEmailTemplateKey());
+		assertTrue(testTemplate.getEmailTemplateKey() == copy.getEmailTemplateKey() && 
+				testTemplate.getSubject().equals(copy.getSubject()));
+	}
+
+	public void testListEmailTemplates() throws DbException {
+		testTemplate = createTestTemplate();
+		List<EmailTemplate> results = emailTemplateService.listTemplates(null, 0, 0, EmailTemplateListOrder.DATE_CREATED_ASC);
+		assertTrue(results.get(0).getEmailTemplateKey() == testTemplate.getEmailTemplateKey());
+	}
+	
+	public EmailTemplateService getEmailTemplateService() {
+		return emailTemplateService;
+	}
+
+	public void setEmailTemplateService(EmailTemplateService emailTemplateService) {
+		this.emailTemplateService = emailTemplateService;
+	}
+
+}

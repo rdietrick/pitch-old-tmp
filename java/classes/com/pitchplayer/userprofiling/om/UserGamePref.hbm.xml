@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 10, 2008 4:02:44 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.pitchplayer.userprofiling.om.UserGamePref" table="user_game_pref" catalog="pitch_db2">
+         <id name="userId" type="int">
+            <column name="user_id" />
+            <generator class="foreign">
+            	<param name="property">user</param>
+            </generator>
+        </id>
+        <one-to-one name="user" class="com.pitchplayer.userprofiling.om.User" constrained="true">
+        </one-to-one>
+        <property name="dfltGameType" type="byte">
+            <column name="dflt_game_type" not-null="true" />
+        </property>
+        <property name="dfltLowScoring" type="java.lang.Integer">
+            <column name="dflt_low_scoring" not-null="true" />
+        </property>
+        <property name="dfltChallengeSend" type="java.lang.Integer">
+            <column name="dflt_challenge_send" not-null="true" />
+        </property>
+        <property name="dfltChallengeShow" type="java.lang.Integer">
+            <column name="dflt_challenge_show" not-null="true" />
+        </property>
+        <property name="dateUpdated" type="timestamp">
+            <column name="date_updated" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>
